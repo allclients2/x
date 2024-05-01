@@ -5,9 +5,9 @@
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  margin: 10% auto 0; /* Adjusted margin to position 20% from the top */
+  margin: 10% auto 0;
   text-align: center;
-  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+  font-family: sans-serif; 
 }
 
 
@@ -23,12 +23,12 @@
   width: 90%;
   height: 90%;
   color: #333; /* Default text color */
-  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+  font-family: sans-serif;
 }
 
 .history {
   overflow-y: auto;
-  max-height: 150px;
+  height: 250px;
 }
 
 .history div {
@@ -37,7 +37,13 @@
   border-radius: 4px;
   font-size: 2.0em;
   color: #333; /* Default text color */
-  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+  font-family: sans-serif;
+}
+
+.nohistory {
+  color: #333; /* Default text color */
+  font-size: 1.55em;
+  font-family: Roboto;
 }
 
 .keyboard-listener {
@@ -46,7 +52,7 @@
 
 body {
   background-color: #f4f4f4; /* Default light background */
-  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+  font-family: sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -63,14 +69,18 @@ body {
     color: #eee; /* Adjusted text color for dark theme */
   }
 
+  .nohistory {
+    color: #999;
+  }
+
   .history div {
     background-color: #555;
-    color: #eee; /* Adjusted text color for dark theme */
+    color: #eee;
   }
 
   .calculator,
   .display,
   .history div {
-    border-color: #999; /* Adjusted border color for dark theme */
+    border-color: #999;
   }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
-  const [result, setResult] = useState('0');
+  const [result, setResult] = useState('');
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1); // Track history navigation
   const historyRef = useRef(null); // Ref for history box
@@ -42,20 +42,29 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Enter') {
-        calculate();
+      if (event.key === 'Enter' && result.length > 0) {
+        if (result.toLowerCase() === "clear") {
+          clearhistory();
+        } else {
+          calculate();
+        }
       } else if (event.key === 'Escape') {
         setResult("");
       } else if (event.key === 'Backspace') {
         backspace();
-      } else if (event.key === 'ArrowUp' || event.key === 'w') { // Navigate history with up arrow or 'w' key
+      } else if (event.key === 'ArrowUp') { // Navigate history with up arrow or 'w' key
         navigateHistory(-1);
-      } else if (event.key === 'ArrowDown' || event.key === 's') { // Navigate history with down arrow or 's' key
+      } else if (event.key === 'ArrowDown') { // Navigate history with down arrow or 's' key
         navigateHistory(1);
       } else if (event.key.length === 1) {
-        setResult(prevResult => prevResult === '0' ? event.key : prevResult + event.key);
+        setResult(prevResult => prevResult + event.key);
       }
     };
+
+    const clearhistory = () => {
+      setHistory([]);
+      setResult("");
+    }
 
     document.addEventListener('keydown', handleKeyDown);
 
@@ -88,16 +97,20 @@ function App() {
   };
 
   const backspace = () => {
-    setResult(prevResult => prevResult.length === 1 ? '0' : prevResult.slice(0, -1));
+    setResult(prevResult => prevResult.slice(0, -1));
   };
 
   return (
     <div className="calculator">
-      <input className="display" id="result" type="text" value={result} readOnly />
-      <div className="history" ref={historyRef}>
-        {history.map((calculation, index) => (
-          <div key={index}>{calculation}</div>
-        ))}
+      <input className="display" id="result" type="text" placeholder="0" value={result} readOnly />
+      <div className="history" ref={historyRef}> 
+        {history.length === 0 ? (
+          <h className="nohistory">JS Calculator by BCV</h>
+        ) : (
+          history.map((calculation, index) => (
+            <div key={index}>{calculation}</div>
+          ))
+        )}
       </div>
       <div className="keyboard-listener"></div>
     </div>
