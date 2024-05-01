@@ -1,38 +1,76 @@
-.App {
+.calculator {
+  width: 22%;
+  height: 57%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin: 10% auto 0; /* Adjusted margin to position 20% from the top */
   text-align: center;
+  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.display {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-right: 50%;
+  font-size: 2.0em;
+  text-align: right;
+  margin-bottom: 20px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  width: 90%;
+  height: 90%;
+  color: #333; /* Default text color */
+  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.history {
+  overflow-y: auto;
+  max-height: 150px;
+}
+
+.history div {
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 2.0em;
+  color: #333; /* Default text color */
+  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+}
+
+.keyboard-listener {
+  outline: none;
+}
+
+body {
+  background-color: #f4f4f4; /* Default light background */
+  font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #222; /* Dark background when user prefers dark theme */
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .calculator {
+    background-color: #333;
   }
-  to {
-    transform: rotate(360deg);
+
+  .display {
+    background-color: #444;
+    color: #eee; /* Adjusted text color for dark theme */
+  }
+
+  .history div {
+    background-color: #555;
+    color: #eee; /* Adjusted text color for dark theme */
+  }
+
+  .calculator,
+  .display,
+  .history div {
+    border-color: #999; /* Adjusted border color for dark theme */
   }
 }
