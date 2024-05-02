@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { evaluate } from 'mathjs';
+import { Equation, parse } from 'algebra.js'
 import './App.css';
+
 
 function App() {
   const [result, setResult] = useState('');
@@ -50,9 +53,7 @@ function App() {
         }
       } else if (event.key === 'Escape') {
         setResult("");
-      } else if (event.key === 'Backspace') {
-        backspace();
-      } else if (event.key === 'ArrowUp') { // Navigate history with up arrow or 'w' key
+      }  else if (event.key === 'ArrowUp') { // Navigate history with up arrow or 'w' key
         navigateHistory(-1);
       } else if (event.key === 'ArrowDown') { // Navigate history with down arrow or 's' key
         navigateHistory(1);
@@ -82,20 +83,47 @@ function App() {
     }
   };
 
-  const calculate = () => {
-    var calculatedResult;
-    try {
-      calculatedResult = eval(result);
-    } catch (error) {
-      return;
-    }
-    setHistory(prevHistory => [...prevHistory, result + ' = ' + calculatedResult]);
-    setHistoryIndex(-1); // Reset history navigation after calculation
-    setResult("");
-  };
+  const findanswer = () => {
+    let solved;
+    let equatparse = result.match(/^(\w*) in (.+)\s+=\s*(.+)$/);
+    if (equatparse) {
+      let eqatvar = equatparse[1] || "x";
+      let parsed;
 
-  const backspace = () => {
-    setResult(prevResult => prevResult.slice(0, -1));
+      try { //solve 
+        parsed = parse(equatparse[2]);
+        let equation = new Equation(parsed, parse(equatparse[3]));
+        solved = equation.solveFor(eqatvar).toString();
+      } catch (error) {
+        if (error == "EvalError: No Solution") {
+          solved = "unsolvable."
+        } else {
+          console.warn(error)
+          return;
+        }
+      }
+
+      return equatparse[2] + ' = ' + equatparse[3] + ', ' + eqatvar + ' is ' + solved;
+    } else {
+
+      try { //normal
+        solved = evaluate(result).toString();
+      } catch (error) {
+        console.warn(error)
+        return;
+      }
+
+      return result + ' = ' + solved;
+    }
+  }
+
+  const calculate = () => {
+    var answer = findanswer();
+    if (answer) {
+      setHistory(prevHistory => [...prevHistory, answer]);
+      setHistoryIndex(-1); // Reset history navigation after calculation
+      setResult("");
+    }
   };
 
   const handleChange = (event) => {
@@ -107,7 +135,7 @@ function App() {
       <input className="display" id="result" type="text" placeholder="0" value={result} onChange={handleChange}/>
       <div className="history" ref={historyRef}> 
         {history.length === 0 ? (
-          <h className="nohistory">JS Calculator by BCV</h>
+          <p className="nohistory">React Calculator by BCV</p> // Me name of course YEAhhhh
         ) : (
           history.map((calculation, index) => (
             <div key={index}>{calculation}</div>
