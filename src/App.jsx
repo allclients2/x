@@ -102,7 +102,7 @@ function App() {
 
   return (
     <div className="calculator">
-      <input className="display" id="result" type="text" placeholder="0" value={result} readOnly />
+      <input className="display" id="result" type="text" placeholder="0" value={result} readOnly/>
       <div className="history" ref={historyRef}> 
         {history.length === 0 ? (
           <h className="nohistory">JS Calculator by BCV</h>

@@ -1,40 +1,44 @@
 .calculator {
-  width: 22%;
-  height: 57%;
+  width: 100vw;
+  height: 100vh;
   border-radius: 8px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin: 10% auto 0;
   text-align: center;
+  position: fixed;
   font-family: sans-serif; 
 }
-
 
 .display {
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 10px;
-  margin-right: 50%;
   font-size: 2.0em;
   text-align: right;
-  margin-bottom: 20px;
+  margin-top: 3vh;
+  margin-bottom: 5vh;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   width: 90%;
-  height: 90%;
-  color: #333; /* Default text color */
+  height: 20vh;
+  max-height: 52px;
+  color: #333;
   font-family: sans-serif;
 }
 
 .history {
   overflow-y: auto;
-  height: 250px;
+  overflow-x: hidden;
+  margin: auto;
+  padding: 3% - 5px;
+  height: 65vh; /* 30% of viewport height */
+  width: 90%;
 }
 
 .history div {
   margin-bottom: 5px;
   padding: 5px;
   border-radius: 4px;
+  width: 100% - 5px - 4px;
   font-size: 2.0em;
   color: #333; /* Default text color */
   font-family: sans-serif;
