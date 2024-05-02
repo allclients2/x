@@ -56,8 +56,6 @@ function App() {
         navigateHistory(-1);
       } else if (event.key === 'ArrowDown') { // Navigate history with down arrow or 's' key
         navigateHistory(1);
-      } else if (event.key.length === 1) {
-        setResult(prevResult => prevResult + event.key);
       }
     };
 
@@ -100,9 +98,13 @@ function App() {
     setResult(prevResult => prevResult.slice(0, -1));
   };
 
+  const handleChange = (event) => {
+    setResult(event.target.value);
+  };
+
   return (
     <div className="calculator">
-      <input className="display" id="result" type="text" placeholder="0" value={result} readOnly/>
+      <input className="display" id="result" type="text" placeholder="0" value={result} onChange={handleChange}/>
       <div className="history" ref={historyRef}> 
         {history.length === 0 ? (
           <h className="nohistory">JS Calculator by BCV</h>
