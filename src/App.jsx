@@ -135,7 +135,7 @@ function App() {
       <input className="display" id="result" type="text" placeholder="0" value={result} onChange={handleChange}/>
       <div className="history" ref={historyRef}> 
         {history.length === 0 ? (
-          <p className="nohistory">React Calculator by BCV</p> // Me name of course YEAhhhh
+          <a href = "https://github.com/allclients2/x" className="nohistory">React Calculator by BCV</a> // Me name of course YEAhhhh
         ) : (
           history.map((calculation, index) => (
             <div key={index}>{calculation}</div>
