@@ -74,16 +74,14 @@ function App() {
 
   const navigateHistory = (increment) => {
     const newIndex = historyIndex + increment;
-    if (newIndex >= -1 && newIndex < history.length) {
+    if (newIndex >= 0 && newIndex < history.length) {
       setHistoryIndex(newIndex);
-      if (newIndex === -1) {
-        setResult('');
-      } else {
-        setResult(history[newIndex].answer);
-      }
+      setResult(history[newIndex].split('=')[0].trim()); // Set result from history
+    } else if (newIndex === -1) { // empty if at end
+      setHistoryIndex(newIndex);
+      setResult('');
     }
   };
-
 
   const findanswer = () => {
     let solved;
