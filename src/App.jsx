@@ -74,14 +74,16 @@ function App() {
 
   const navigateHistory = (increment) => {
     const newIndex = historyIndex + increment;
-    if (newIndex >= 0 && newIndex < history.length) {
+    if (newIndex >= -1 && newIndex < history.length) {
       setHistoryIndex(newIndex);
-      setResult(history[newIndex].split('=')[0].trim()); // Set result from history
-    } else if (newIndex === -1) { // Reset to current input if at the end of history
-      setHistoryIndex(newIndex);
-      setResult('');
+      if (newIndex === -1) {
+        setResult('');
+      } else {
+        setResult(history[newIndex].answer);
+      }
     }
   };
+
 
   const findanswer = () => {
     let solved;
@@ -120,7 +122,7 @@ function App() {
   const calculate = () => {
     var answer = findanswer();
     if (answer) {
-      setHistory(prevHistory => [...prevHistory, answer]);
+      setHistory(prevHistory => [answer, ...prevHistory]);
       setHistoryIndex(-1); // Reset history navigation after calculation
       setResult("");
     }
