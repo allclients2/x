@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { evaluate } from 'mathjs';
-import { Equation, parse } from 'algebra.js'
+import { Equation, parse } from 'algebra.js';
 import './App.css';
-
 
 function App() {
   const [result, setResult] = useState('');
@@ -10,11 +9,11 @@ function App() {
   const [historyIndex, setHistoryIndex] = useState(-1); // Track history navigation
   const historyRef = useRef(null); // Ref for history box
 
-  const scrollToBottom = () => {
+  const scrollToTop = () => {
     const element = historyRef.current;
     const duration = 200; // 0.2 seconds
     const start = element.scrollTop;
-    const target = element.scrollHeight - element.clientHeight;
+    const target = 0;
     let startTime = null;
 
     const animateScroll = (currentTime) => {
@@ -39,7 +38,7 @@ function App() {
 
   useEffect(() => {
     if (historyRef.current) {
-      scrollToBottom();
+      scrollToTop(); // Scroll to the top instead of the bottom
     }
   }, [history]);
 
@@ -53,7 +52,7 @@ function App() {
         }
       } else if (event.key === 'Escape') {
         setResult("");
-      }  else if (event.key === 'ArrowUp') { // Navigate history with up arrow or 'w' key
+      } else if (event.key === 'ArrowUp') { // Navigate history with up arrow or 'w' key
         navigateHistory(-1);
       } else if (event.key === 'ArrowDown') { // Navigate history with down arrow or 's' key
         navigateHistory(1);
@@ -63,7 +62,7 @@ function App() {
     const clearhistory = () => {
       setHistory([]);
       setResult("");
-    }
+    };
 
     document.addEventListener('keydown', handleKeyDown);
 
@@ -76,7 +75,12 @@ function App() {
     const newIndex = historyIndex + increment;
     if (newIndex >= 0 && newIndex < history.length) {
       setHistoryIndex(newIndex);
-      setResult(history[newIndex].split('=')[0].trim()); // Set result from history
+      let test = history[newIndex].split('=');
+      let result = '';
+      for (let i = 0; i < test.length - 1; i++) {
+        result += (i != 0 ? '=' : '') + test[i];
+      }
+      setResult(result.trim()); // Set result from history
     } else if (newIndex === -1) { // empty if at end
       setHistoryIndex(newIndex);
       setResult('');
@@ -96,9 +100,9 @@ function App() {
         solved = equation.solveFor(eqatvar).toString();
       } catch (error) {
         if (error == "EvalError: No Solution") {
-          solved = "unsolvable."
+          solved = "unsolvable.";
         } else {
-          console.warn(error)
+          console.warn(error);
           return;
         }
       }
@@ -109,13 +113,13 @@ function App() {
       try { //normal
         solved = evaluate(result).toString();
       } catch (error) {
-        console.warn(error)
+        console.warn(error);
         return;
       }
 
       return result + ' = ' + solved;
     }
-  }
+  };
 
   const calculate = () => {
     var answer = findanswer();
@@ -135,7 +139,7 @@ function App() {
       <input className="display" id="result" type="text" placeholder="0" value={result} onChange={handleChange}/>
       <div className="history" ref={historyRef}> 
         {history.length === 0 ? (
-          <a href = "https://github.com/allclients2/x" className="nohistory">React Calculator by BCV</a> // Me name of course YEAhhhh
+          <a href="https://github.com/allclients2/x" className="nohistory">React Calculator by BCV</a> // Me name of course YEAhhhh
         ) : (
           history.map((calculation, index) => (
             <div key={index}>{calculation}</div>
